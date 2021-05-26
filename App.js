@@ -5,7 +5,7 @@ import {
   StatusBar,
   Button,
   View,
-  Text,
+  NativeEventEmitter,
   NativeModules,
 } from 'react-native';
 
@@ -13,6 +13,12 @@ import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
 const {OurModule} = NativeModules;
 
 const App = () => {
+  React.useEffect(() => {
+    const eventEmitter = new NativeEventEmitter(NativeModules.ToastExample);
+    eventEmitter.addListener('MountEvent', event => {
+      console.log('DATA EVENT :', event);
+    });
+  }, []);
   const onPress = () => {
     OurModule.openToast('Hello Java from JS');
   };
